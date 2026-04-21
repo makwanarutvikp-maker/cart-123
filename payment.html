@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment - Hostel Kart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo">Hostel Kart</div>
+</header>
+
+<div style="max-width:600px;margin:40px auto;text-align:center;">
+
+  <h2>Select Payment Method</h2>
+
+  <!-- QR -->
+  <div id="qr" onclick="selectMethod('qr')" 
+       style="border:2px solid #ddd;padding:20px;margin:20px;cursor:pointer;">
+    <h3>📱 Pay via QR</h3>
+    <img id="qrImage" src="qr.png" width="200" style="display:none;margin-top:10px;">
+  </div>
+
+  <!-- COD -->
+  <div id="cod" onclick="selectMethod('cod')" 
+       style="border:2px solid #ddd;padding:20px;margin:20px;cursor:pointer;">
+    <h3>💵 Cash on Delivery</h3>
+  </div>
+
+  <button onclick="confirmPayment()" style="padding:15px 25px;">
+    Place Order
+  </button>
+
+</div>
+
+<script>
+
+let method = "";
+
+// select payment
+function selectMethod(type){
+
+  method = type;
+
+  const qrBox = document.getElementById("qr");
+  const codBox = document.getElementById("cod");
+  const qrImage = document.getElementById("qrImage");
+
+  qrBox.style.border = "2px solid #ddd";
+  codBox.style.border = "2px solid #ddd";
+  qrImage.style.display = "none";
+
+  if(type === "qr"){
+    qrBox.style.border = "2px solid red";
+    qrImage.style.display = "block";
+  } else {
+    codBox.style.border = "2px solid red";
+  }
+}
+
+
+// PLACE ORDER (FIXED WHATSAPP)
+function confirmPayment(){
+
+  if(!method){
+    alert("Select payment method");
+    return;
+  }
+
+  let cart = JSON.parse(localStorage.getItem("hostelKartCart")) || [];
+  let user = JSON.parse(localStorage.getItem("checkoutUser")) || {};
+
+  if(cart.length === 0){
+    alert("Cart is empty!");
+    return;
+  }
+
+  let message = "🛒 *NEW ORDER - HOSTEL KART*\n\n";
+
+  let total = 0;
+
+  cart.forEach(item => {
+    message += `📦 ${item.name} x${item.quantity} = ₹${item.price * item.quantity}\n`;
+    total += item.price * item.quantity;
+  });
+
+  message += `\n💰 Total: ₹${total}\n`;
+
+  message += `\n👤 Name: ${user.name || "N/A"}`;
+  message += `\n📱 Phone: ${user.phone || "N/A"}`;
+  message += `\n🏠 Hostel: ${user.hostel || "N/A"}`;
+  message += `\n🚪 Room: ${user.room || "N/A"}`;
+  message += `\n💳 Payment: ${method.toUpperCase()}`;
+
+  // 🔥 USE GLOBAL NUMBER (FIX)
+  const phoneNumber = "919723226231";
+
+  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+  // safer open
+  const win = window.open(url, "_blank");
+
+  if(!win){
+    window.location.href = url;
+  }
+
+  // clear cart AFTER sending
+  localStorage.removeItem("hostelKartCart");
+
+  // redirect
+  setTimeout(() => {
+    window.location.href = "success.html";
+  }, 1500);
+}
+
+</script>
+
+</body>
+</html>

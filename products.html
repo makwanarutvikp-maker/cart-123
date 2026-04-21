@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Product Details - Hostel Kart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo">Hostel Kart</div>
+
+  <input type="text" placeholder="Search..." class="search">
+
+  <div class="menu">
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+  </div>
+</header>
+
+<!-- PRODUCT SECTION -->
+<div class="product-page">
+
+  <div class="product-image">
+    <img src="https://m.media-amazon.com/images/I/81W0qHKcLML.jpg" alt="Pillow">
+  </div>
+
+  <div class="product-details">
+
+    <h2>Pillow</h2>
+
+    <p class="price">₹299</p>
+
+    <p class="desc">
+      Soft and comfortable pillow perfect for hostel use.
+      Lightweight, durable, and easy to maintain.
+    </p>
+
+    <!-- ADD TO CART BUTTON -->
+    <button onclick="addToCart('Pillow',299,1)">
+      Add to Cart
+    </button>
+
+    <!-- QUANTITY CONTROLS (FIXED LOCATION) -->
+    <div class="quantity" style="margin-top:15px;">
+      <button onclick="decreaseQty()">−</button>
+      <span id="qty">1</span>
+      <button onclick="increaseQty()">+</button>
+    </div>
+
+    <br><br>
+    <a href="index.html">⬅ Back to Products</a>
+
+  </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script src="script.js"></script>
+
+</body>
+</html>

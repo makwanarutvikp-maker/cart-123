@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pillow - Hostel Kart</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .product-page{
+      max-width:1200px;
+      margin:auto;
+      padding:20px;
+      display:flex;
+      gap:60px;
+      align-items:flex-start;
+    }
+
+    .product-image-section{
+      flex:1;
+      max-width:50%;
+      position:relative;
+    }
+
+    /* Slider */
+    .slider-box{
+      position:relative;
+      width:100%;
+    }
+
+    .product-image{
+      width:100%;
+      height:500px;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow:0 20px 40px rgba(0,0,0,.1);
+    }
+
+    .arrow{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:45px;
+      height:45px;
+      border:none;
+      border-radius:50%;
+      font-size:24px;
+      cursor:pointer;
+      background:white;
+      box-shadow:0 5px 15px rgba(0,0,0,.2);
+      z-index:10;
+    }
+
+    .left-arrow{ left:15px; }
+    .right-arrow{ right:15px; }
+
+    .thumbs{
+      display:flex;
+      gap:10px;
+      margin-top:15px;
+    }
+
+    .thumbs img{
+      width:70px;
+      height:70px;
+      object-fit:cover;
+      border-radius:10px;
+      cursor:pointer;
+      border:2px solid transparent;
+    }
+
+    .thumbs img.active{
+      border-color:#e74c3c;
+    }
+
+    .product-details-section{
+      flex:1;
+      padding:35px;
+      background:#f8f9fa;
+      border-radius:20px;
+    }
+
+    .product-title{
+      font-size:2.3rem;
+      margin-bottom:10px;
+    }
+
+    .product-price{
+      font-size:2rem;
+      color:#e74c3c;
+      font-weight:bold;
+      margin-bottom:20px;
+    }
+
+    .quantity-section{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      margin:25px 0;
+    }
+
+    .qty-btn{
+      width:45px;
+      height:45px;
+      border:none;
+      border-radius:50%;
+      font-size:22px;
+      cursor:pointer;
+      background:#667eea;
+      color:white;
+    }
+
+    .add-to-cart-btn{
+      width:100%;
+      padding:16px;
+      border:none;
+      border-radius:40px;
+      font-size:1.1rem;
+      cursor:pointer;
+      background:#e74c3c;
+      color:white;
+      font-weight:bold;
+    }
+
+    .back-link{
+      display:inline-block;
+      margin-top:20px;
+      text-decoration:none;
+      color:#3498db;
+      font-weight:bold;
+    }
+
+    @media(max-width:768px){
+      .product-page{
+        flex-direction:column;
+      }
+
+      .product-image-section,
+      .product-details-section{
+        max-width:100%;
+        width:100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo">Hostel Kart</div>
+
+  <div class="menu">
+    <a href="index.html">Home</a>
+    <a href="#">Cart (<span id="cart-count">0</span>)</a>
+  </div>
+</header>
+
+<div class="product-page">
+
+  <!-- LEFT IMAGE SECTION -->
+  <div class="product-image-section">
+
+    <div class="slider-box">
+      <button class="arrow left-arrow" onclick="prevImage()">❮</button>
+
+      <img id="mainImage" class="product-image">
+
+      <button class="arrow right-arrow" onclick="nextImage()">❯</button>
+    </div>
+
+    <div class="thumbs" id="thumbContainer"></div>
+
+  </div>
+
+  <!-- RIGHT DETAILS -->
+  <div class="product-details-section">
+
+    <h1 class="product-title">Premium Hostel Pillow</h1>
+    <p class="product-price">₹299</p>
+
+    <p>
+      ✓ Soft cotton cover <br>
+      ✓ Premium comfort <br>
+      ✓ Washable <br>
+      ✓ Lightweight <br>
+      ✓ Perfect for hostel life
+    </p>
+
+    <div class="quantity-section">
+      <button class="qty-btn" onclick="decreaseQty()">−</button>
+      <span id="qty">1</span>
+      <button class="qty-btn" onclick="increaseQty()">+</button>
+    </div>
+
+    <button class="add-to-cart-btn" onclick="addToCart()">
+      Add to Cart
+    </button>
+
+    <a href="index.html" class="back-link">⬅ Back to Products</a>
+
+  </div>
+</div>
+
+<script>
+/* ======================
+   IMAGE SLIDER
+====================== */
+const images = [
+"https://m.media-amazon.com/images/I/81W0qHKcLML.jpg",
+"https://m.media-amazon.com/images/I/71n6m0V6HjL.jpg",
+"https://m.media-amazon.com/images/I/71r0x6Yf4sL.jpg",
+"https://m.media-amazon.com/images/I/71f1V5H6sBL.jpg"
+];
+
+let current = 0;
+
+function showImage(){
+  document.getElementById("mainImage").src = images[current];
+
+  let thumbs = "";
+  images.forEach((img,index)=>{
+    thumbs += `
+      <img src="${img}" 
+      class="${index===current ? 'active' : ''}"
+      onclick="goToImage(${index})">
+    `;
+  });
+
+  document.getElementById("thumbContainer").innerHTML = thumbs;
+}
+
+function nextImage(){
+  current = (current + 1) % images.length;
+  showImage();
+}
+
+function prevImage(){
+  current = (current - 1 + images.length) % images.length;
+  showImage();
+}
+
+function goToImage(index){
+  current = index;
+  showImage();
+}
+
+showImage();
+
+
+/* ======================
+   QUANTITY
+====================== */
+let quantity = 1;
+
+function increaseQty(){
+  quantity++;
+  document.getElementById("qty").textContent = quantity;
+}
+
+function decreaseQty(){
+  if(quantity > 1){
+    quantity--;
+    document.getElementById("qty").textContent = quantity;
+  }
+}
+
+
+/* ======================
+   ADD TO CART WORKING
+====================== */
+function addToCart(){
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.push({
+    name:"Premium Hostel Pillow",
+    price:299,
+    qty:quantity,
+    image:images[current]
+  });
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartCount();
+
+  alert("Added to cart successfully!");
+}
+
+function updateCartCount(){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let total = 0;
+
+  cart.forEach(item=>{
+    total += item.qty;
+  });
+
+  document.getElementById("cart-count").textContent = total;
+}
+
+updateCartCount();
+
+</script>
+
+</body>
+</html>

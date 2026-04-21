@@ -1,0 +1,49 @@
+[
+  {
+    "id": "pillow",
+    "name": "Premium Hostel Pillow",
+    "price": 299,
+    "image": "https://m.media-amazon.com/images/I/81W0qHKcLML.jpg",
+    "description": "Experience ultimate comfort with our premium hostel pillow.",
+    "features": ["All-night comfort & support", "Soft cotton cover", "Hypoallergenic filling", "Machine washable", "Lightweight"],
+    "filename": "pillow.html"
+  },
+  {
+    "id": "bucket",
+    "name": "Durable Plastic Bucket",
+    "price": 199,
+    "image": "https://tiimg.tistatic.com/fp/1/005/660/plastic-bucket-with-plastic-handle-336.jpg",
+    "description": "Essential 15L bucket for laundry, cleaning & storage.",
+    "features": ["Heavy-duty plastic", "Sturdy handle", "Stackable design", "Lightweight", "Unbreakable"],
+    "filename": "bucket.html"
+  },
+  {
+
+    "id": "mattress",
+    "name": "Comfort Foldable Mattress",
+    "price": 999,
+    "image": "https://m.media-amazon.com/images/I/71u+GKt5ffS._SL1500_.jpg",
+    "description": "4-inch thick mattress perfect for hostel beds.",
+    "features": ["High-density foam", "Foldable design", "Waterproof", "Anti-slip bottom", "Washable cover"],
+    "filename": "mattress.html"
+  },
+  {
+
+    "id": "water bottel",
+    "name": "stainless steel water bottel",
+    "price": 999,
+    "image": "https://uncrate.com/p/2022/11/yeti-yonder-water-bottle.jpg",
+    "description": "4-inch thick mattress perfect for hostel beds.",
+    "features": ["cold and hot", "durable", "stainless steel ", "Anti-slip bottom", "easy to carry"],
+    "filename": "bottel.html"
+  },
+  {
+    "id": "bedsheet",
+    "name": "Premium Hostel Bedsheet Set",
+    "price": 499,
+    "image": "https://m.media-amazon.com/images/I/81jT+e84sgL._SL1500_.jpg",
+    "description": "Double bedsheet + 2 pillow covers. 100% cotton.",
+    "features": ["300TC cotton", "Shrink-proof", "Fade-resistant", "Perfect hostel size", "Multiple colors"],
+    "filename": "bedsheet.html"
+  }
+]

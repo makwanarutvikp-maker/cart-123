@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hostel Kart - Profile</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f5f5f5;
+    color:#222;
+}
+
+/* Header */
+header{
+    background:#111;
+    color:white;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+header h2{
+    margin:0;
+}
+
+header a{
+    color:white;
+    text-decoration:none;
+    font-size:15px;
+}
+
+/* Main */
+.container{
+    max-width:800px;
+    margin:35px auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.profile-top{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#2e7d32;
+    color:white;
+    font-size:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.info h1{
+    font-size:28px;
+    margin-bottom:6px;
+}
+
+.info p{
+    color:#666;
+}
+
+/* Cards */
+.section{
+    margin-top:30px;
+}
+
+.section h3{
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.card{
+    background:#fafafa;
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:15px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:10px;
+}
+
+.label{
+    color:#666;
+    font-size:14px;
+}
+
+.value{
+    font-weight:bold;
+}
+
+/* Buttons */
+.btn-group{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.btn{
+    border:none;
+    padding:12px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.primary{
+    background:#2e7d32;
+    color:white;
+}
+
+.dark{
+    background:#111;
+    color:white;
+}
+
+.red{
+    background:#e53935;
+    color:white;
+}
+
+/* Responsive */
+@media(max-width:700px){
+
+.profile-top{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.info h1{
+    font-size:24px;
+}
+
+.container{
+    margin:20px;
+    padding:22px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>Hostel Kart</h2>
+    <div>
+        <a href="index.html">Home</a> |
+        <a href="cart.html">Cart</a>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="profile-top">
+        <div class="avatar" id="avatar">U</div>
+
+        <div class="info">
+            <h1 id="name">User Name</h1>
+            <p id="email">user@email.com</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Account Details</h3>
+
+        <div class="card">
+            <div class="row">
+                <span class="label">Phone</span>
+                <span class="value" id="phone">+91 9876543210</span>
+            </div>
+
+            <div class="row">
+                <span class="label">College</span>
+                <span class="value" id="college">IIT Student</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Hostel</span>
+                <span class="value" id="hostel">Hostel Block A</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Orders</h3>
+
+        <div class="card">
+            Total Orders: <b id="orders">0</b>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn primary" onclick="editProfile()">
+            Edit Profile
+        </button>
+
+        <button class="btn dark" onclick="saveProfile()">
+            Save
+        </button>
+
+        <button class="btn red" onclick="logout()">
+            Logout
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+/* Load Saved Profile */
+window.addEventListener('DOMContentLoaded', function(){
+
+    const profile =
+        JSON.parse(localStorage.getItem('hostelKartProfile')) || {};
+
+    if(profile.name) document.getElementById('name').textContent = profile.name;
+    if(profile.email) document.getElementById('email').textContent = profile.email;
+    if(profile.phone) document.getElementById('phone').textContent = profile.phone;
+    if(profile.college) document.getElementById('college').textContent = profile.college;
+    if(profile.hostel) document.getElementById('hostel').textContent = profile.hostel;
+
+    const first =
+        document.getElementById('name').textContent.charAt(0).toUpperCase();
+
+    document.getElementById('avatar').textContent = first;
+
+    const orders =
+        JSON.parse(localStorage.getItem('hostelKartOrders')) || [];
+
+    document.getElementById('orders').textContent = orders.length;
+
+});
+
+
+/* Edit */
+function editProfile(){
+
+    const name = prompt("Enter Name:", document.getElementById('name').textContent);
+    if(name) document.getElementById('name').textContent = name;
+
+    const email = prompt("Enter Email:", document.getElementById('email').textContent);
+    if(email) document.getElementById('email').textContent = email;
+
+    const phone = prompt("Enter Phone:", document.getElementById('phone').textContent);
+    if(phone) document.getElementById('phone').textContent = phone;
+
+    const college = prompt("Enter College:", document.getElementById('college').textContent);
+    if(college) document.getElementById('college').textContent = college;
+
+    const hostel = prompt("Enter Hostel:", document.getElementById('hostel').textContent);
+    if(hostel) document.getElementById('hostel').textContent = hostel;
+
+    const first =
+        document.getElementById('name').textContent.charAt(0).toUpperCase();
+
+    document.getElementById('avatar').textContent = first;
+}
+
+
+/* Save */
+function saveProfile(){
+
+    const profile = {
+        name: document.getElementById('name').textContent,
+        email: document.getElementById('email').textContent,
+        phone: document.getElementById('phone').textContent,
+        college: document.getElementById('college').textContent,
+        hostel: document.getElementById('hostel').textContent
+    };
+
+    localStorage.setItem(
+        'hostelKartProfile',
+        JSON.stringify(profile)
+    );
+
+    alert("Profile Saved ✅");
+}
+
+
+/* Logout */
+function logout(){
+
+    if(confirm("Logout from Hostel Kart?")){
+        window.location.href = "index.html";
+    }
+
+}
+
+</script>
+
+</body>
+</html>

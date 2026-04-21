@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Edit Profile - Hostel Kart</title>
+
+<style>
+body{
+    font-family:Arial;
+    background:#f5f5f5;
+    margin:0;
+}
+
+.container{
+    max-width:500px;
+    margin:50px auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ddd;
+    border-radius:6px;
+    outline:none;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#2e7d32;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#256428;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Edit Profile</h2>
+
+    <input type="text" id="name" placeholder="Enter Name">
+    <input type="email" id="email" placeholder="Enter Email">
+    <input type="text" id="phone" placeholder="Enter Phone">
+    <input type="text" id="college" placeholder="Enter College">
+    <input type="text" id="hostel" placeholder="Enter Hostel">
+
+    <button onclick="saveProfile()">Save Profile</button>
+</div>
+
+<script>
+
+// Load existing profile data
+window.onload = function(){
+    const data = JSON.parse(localStorage.getItem("hostelKartProfile")) || {};
+
+    document.getElementById("name").value = data.name || "";
+    document.getElementById("email").value = data.email || "";
+    document.getElementById("phone").value = data.phone || "";
+    document.getElementById("college").value = data.college || "";
+    document.getElementById("hostel").value = data.hostel || "";
+}
+
+// Save profile and redirect to save page
+function saveProfile(){
+
+    const profile = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        college: document.getElementById("college").value,
+        hostel: document.getElementById("hostel").value
+    };
+
+    localStorage.setItem("hostelKartProfile", JSON.stringify(profile));
+
+    alert("Profile Updated Successfully ✅");
+
+    // 👉 redirect to save page
+    window.location.href = "save.html";
+}
+
+</script>
+
+</body>
+</html>
